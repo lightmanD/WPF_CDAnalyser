@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_CDAnalyser"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600" MaxHeight="400" MaxWidth="762">
+        Title="MainWindow" Height="400" Width="600" MaxHeight="400" MaxWidth="762" ResizeMode="NoResize">
 
     <Grid Background="#FF898888">
         <Grid.ColumnDefinitions>
@@ -21,7 +21,7 @@
         <RichTextBox Name="rTextBoxInput" HorizontalAlignment="Left" Height="73" Margin="163.5,282,0,0" VerticalAlignment="Top" Width="419.333">
             <FlowDocument/>
         </RichTextBox>
-        <Button Content="Config" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="51" Height="20"/>
+        <Button Content="Config" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="51" Height="20" Click="Button_Click_2"/>
         <Button Content="Exit" Margin="12,339,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" Click="Button_Click_1"/>
 
     </Grid>

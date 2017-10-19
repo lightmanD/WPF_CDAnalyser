@@ -1,7 +1,9 @@
 ﻿using OfficeOpenXml;
 using OfficeOpenXml.Drawing;
+using OfficeOpenXml.Style;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -38,7 +40,7 @@ namespace WPF_CDAnalyser
             _path = Directory.GetCurrentDirectory() + @"\results\";
 
             _path += "_" + lotID;
-            _path += "_" + recipeName+".xlsx";
+            _path += "_" + recipeName + ".xlsx";
             _path = _path.Replace('\"', '_');
             Console.WriteLine(_path);
             _file = new FileInfo(_path);
@@ -50,7 +52,7 @@ namespace WPF_CDAnalyser
             {
                 foreach (var wafer in Wafers)
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("W " + wafer.SourceInfo["slot_no"].ToString()+DateTime.Now.Millisecond.ToString());
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("W " + wafer.SourceInfo["slot_no"].ToString() + DateTime.Now.Millisecond.ToString());
 
                     FormWriter(worksheet);
                     HeaderWriter(worksheet, wafer);
@@ -59,7 +61,7 @@ namespace WPF_CDAnalyser
 
                 ExcelWorksheet worksheetForLot = package.Workbook.Worksheets.Add("ByLot");
                 FormWriter(worksheetForLot);
-                HeaderWriter(worksheetForLot, Wafers[0]);
+                // HeaderWriter(worksheetForLot, Wafers[0]);
                 LotWriter(worksheetForLot, Wafers[0]);
 
                 Stream stream = File.Create(_path);
@@ -82,20 +84,38 @@ namespace WPF_CDAnalyser
 
         private void WaferWriter(ExcelWorksheet workSheet, ResultObject wafer)
         {
-
-            for (int i = 0; i < wafer.GroupNumber; i++)
+            try
             {
-                int rowCounter = 19;
-                // запись имени группы
-                workSheet.Cells[rowCounter++, i + 4].Value = wafer.GroupNames[i];
-                // запись агрегатных результатов
-                foreach (var val in wafer.ResultData[i])
-                    workSheet.Cells[rowCounter++, i + 4].Value = val;
 
-                rowCounter++;
-                //запись всех значений
-                foreach (var val in wafer.MeansByGroup[i])
-                    workSheet.Cells[rowCounter++, i + 4].Value = val;
+                for (int i = 0; i < wafer.GroupNumber; i++)
+                {
+                    int rowCounter = 19;
+                    // запись имени группы
+                    workSheet.Cells[rowCounter++, i + 4].Value = wafer.GroupNames[i];
+                    // запись агрегатных результатов
+                    foreach (var val in wafer.ResultData[i])
+                        workSheet.Cells[rowCounter++, i + 4].Value = val;
+
+                    rowCounter++;
+                    //запись всех значений  и их покраска
+                    foreach (var val in wafer.MeansByGroup[i])
+                    {
+                        workSheet.Cells[rowCounter, i + 4].Value = val;
+
+                        bool ruleRed = wafer.ResultData[i][0] - wafer.SigmaSpacing * wafer.ResultData[i][1] < val && val < wafer.ResultData[i][0] + wafer.SigmaSpacing * wafer.ResultData[i][1];
+                        if (!ruleRed)
+                        {
+                            workSheet.Cells[rowCounter, i + 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            workSheet.Cells[rowCounter, i + 4].Style.Fill.BackgroundColor.SetColor(Color.Red);
+                        }
+                        rowCounter++;
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error! ExcelWriter.WaferWriter " + e.Message.ToString());
             }
         }
 
@@ -129,7 +149,7 @@ namespace WPF_CDAnalyser
                 rowCounter++;
             }
 
-            foreach(var elem in wafer.SourceInfo)
+            foreach (var elem in wafer.SourceInfo)
             {
                 workSheet.Cells[rowCounter, 1].Value = elem.Key;
                 workSheet.Cells[rowCounter, 2].Value = elem.Value;
