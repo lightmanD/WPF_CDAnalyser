@@ -39,7 +39,7 @@ namespace WPF_CDAnalyser
 
             _path = Directory.GetCurrentDirectory() + @"\results\";
 
-            _path += "_" + lotID;
+            _path += "_"+DateTime.Today.Millisecond.ToString()+"_" + lotID;
             _path += "_" + recipeName + ".xlsx";
             _path = _path.Replace('\"', '_');
             Console.WriteLine(_path);
@@ -93,8 +93,27 @@ namespace WPF_CDAnalyser
                     // запись имени группы
                     workSheet.Cells[rowCounter++, i + 4].Value = wafer.GroupNames[i];
                     // запись агрегатных результатов
+                    var counter = 0;
                     foreach (var val in wafer.ResultData[i])
-                        workSheet.Cells[rowCounter++, i + 4].Value = val;
+                    {
+                        workSheet.Cells[rowCounter, i + 4].Value = val;
+
+                        bool ruleMean = wafer.CtrlValues[0] + wafer.CtrlValues[1] > val && wafer.CtrlValues[0] - wafer.CtrlValues[1] < val;
+                        if (counter == 0 && !ruleMean)
+                        {
+                            workSheet.Cells[rowCounter, i + 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            workSheet.Cells[rowCounter, i + 4].Style.Fill.BackgroundColor.SetColor(Color.Red);
+                        }
+                        bool ruleSigma = val < wafer.CtrlValues[2];
+                        if (counter == 1 && !ruleSigma)
+                        {
+                            workSheet.Cells[rowCounter, i + 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                            workSheet.Cells[rowCounter, i + 4].Style.Fill.BackgroundColor.SetColor(Color.Red);
+                        }
+
+                        rowCounter++;
+                        counter++;
+                    }
 
                     rowCounter++;
                     //запись всех значений  и их покраска
@@ -123,20 +142,36 @@ namespace WPF_CDAnalyser
         {
             for (int i = 0; i < LotResult.MeansByGroup.Count; i++)
             {
+                int counter = 0;
                 int rowCounter = 19;
                 workSheet.Cells[rowCounter++, i + 4].Value = wafer.GroupNames[i];
+
                 foreach (var val in LotResult.ResultData[i])
-                    workSheet.Cells[rowCounter++, i + 4].Value = val;
+                {
+                    workSheet.Cells[rowCounter, i + 4].Value = val;
+                    bool ruleMean = wafer.CtrlValues[0] + wafer.CtrlValues[1] > val && wafer.CtrlValues[0] - wafer.CtrlValues[1] < val;
+                    if (counter == 0 && !ruleMean)
+                    {
+                        workSheet.Cells[rowCounter, i + 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        workSheet.Cells[rowCounter, i + 4].Style.Fill.BackgroundColor.SetColor(Color.Red);
+                    }
+                    bool ruleSigma = val < wafer.CtrlValues[2];
+                    if (counter == 1 && !ruleSigma)
+                    {
+                        workSheet.Cells[rowCounter, i + 4].Style.Fill.PatternType = ExcelFillStyle.Solid;
+                        workSheet.Cells[rowCounter, i + 4].Style.Fill.BackgroundColor.SetColor(Color.Red);
+                    }
+                    counter++;
+                    rowCounter++;
+                }
+               
                 rowCounter++;
                 foreach (var val in LotResult.MeansByGroup[i])
                     workSheet.Cells[rowCounter++, i + 4].Value = val;
             }
         }
 
-        private void ExcelSaver()
-        {
-
-        }
+       
 
         private void HeaderWriter(ExcelWorksheet workSheet, ResultObject wafer)
         {

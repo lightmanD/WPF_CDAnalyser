@@ -116,14 +116,13 @@ namespace WPF_CDAnalyser
                 Int32.TryParse(fileNumberRead, out int group_number);
                 _groupNumber = group_number;
                 if (group_number.GetType().ToString() == INT.GetType().ToString())
-
                     break;
 
             }
         }
         private string WriteCtrlValue()
         {
-            Console.WriteLine("Введите значения границ(формат USL UCL Target LCL LSL) ");
+            Console.WriteLine("Введите значения границ(формат Target Deviation МaxSigma  0 0) ");
             string input = Console.ReadLine();
 
             return input;
