@@ -52,7 +52,8 @@ namespace WPF_CDAnalyser
             {
                 foreach (var wafer in Wafers)
                 {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("W " + wafer.SourceInfo["slot_no"].ToString() + DateTime.Now.Millisecond.ToString());
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("W " +
+                        wafer.SourceInfo["slot_no"].ToString()+"|"+ DateTime.Now.Millisecond.ToString());
 
                     FormWriter(worksheet);
                     HeaderWriter(worksheet, wafer);

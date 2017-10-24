@@ -3,7 +3,7 @@ using System.IO;
 using System.Windows;
 using System.ComponentModel;
 using System;
-
+using System.Diagnostics;
 
 namespace WPF_CDAnalyser
 {
@@ -34,8 +34,7 @@ namespace WPF_CDAnalyser
                 try
                 {
                     _filesPaths = openFileDialog2.FileNames;
-
-
+                    
                     int counter = 0;
                     foreach (var elem in _filesPaths)
                     {
@@ -50,7 +49,7 @@ namespace WPF_CDAnalyser
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message);
+                    MessageBox.Show("Error: Could not read file from disk. Original error: " + ex.Message.ToString());
                 }
             }
 
@@ -69,13 +68,14 @@ namespace WPF_CDAnalyser
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
+        {//exit button
             this.Close();
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
-        {
+        {//config open button
 
+            Process.Start(Directory.GetCurrentDirectory());
         }
     }
 }
