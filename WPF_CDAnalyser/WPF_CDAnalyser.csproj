@@ -67,6 +67,7 @@
     <Compile Include="LotResultObject.cs" />
     <Compile Include="MSR_Reader.cs" />
     <Compile Include="ResultObject.cs" />
+    <Compile Include="ViewObject.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

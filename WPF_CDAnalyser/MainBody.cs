@@ -21,8 +21,10 @@ namespace WPF_CDAnalyser
         public MainBody(string[] filsePath)
         {
             _filesPaths = filsePath;
-            resultsList = new List<ResultObject>();
+            ResultsList = new List<ResultObject>();
         }
+
+        internal List<ResultObject> ResultsList { get => resultsList; set => resultsList = value; }
 
         public void mainAnalysis()
         {
@@ -61,23 +63,23 @@ namespace WPF_CDAnalyser
                     MeansByGroup = meansByGroups,
                     ResultData = resultData
                 };
-                resultsList.Add(wrObj);
+                ResultsList.Add(wrObj);
 
                 
                 counter++;
             }
 
-            var lotAnalysResult = new Analyser(resultsList);
+            var lotAnalysResult = new Analyser(ResultsList);
 
             var meansByLot = lotAnalysResult.MeansInGroupByLot;
             var resultsByLot = lotAnalysResult.ResultDataByLot;
             
             var lotObj = new LotResultObject { MeansByGroup = meansByLot, ResultData=resultsByLot };
 
-            var excelWriter = new ExcelWorker(resultsList, lotObj);
-
-
-
+            var excelWriter = new ExcelWorker(ResultsList, lotObj);
+            
         }
+
+        
     }
 }

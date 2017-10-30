@@ -14,6 +14,7 @@ namespace WPF_CDAnalyser
     {
         private string[] _filesPaths;
         MainBody MainBody;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -21,7 +22,7 @@ namespace WPF_CDAnalyser
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-           
+
             OpenFileDialog openFileDialog2 = new OpenFileDialog();
             openFileDialog2.Filter = "msr files (*.msr)|*.msr|All files (*.*)|*.*";
 
@@ -29,20 +30,20 @@ namespace WPF_CDAnalyser
             openFileDialog2.FilterIndex = 2;
             openFileDialog2.RestoreDirectory = true;
 
-            if (openFileDialog2.ShowDialog() == true)       
+            if (openFileDialog2.ShowDialog() == true)
             {
                 try
                 {
                     _filesPaths = openFileDialog2.FileNames;
-                    
+
                     int counter = 0;
                     foreach (var elem in _filesPaths)
                     {
                         string[] split = elem.Split('\\');
                         string temp = counter.ToString() + " | " + split[split.Length - 1].ToString() + "\n";
 
-                        rTextBoxOutput.AppendText(temp); 
-                       
+                        rTextBoxOutput.AppendText(temp);
+
                         counter++;
                     }
 
@@ -57,6 +58,23 @@ namespace WPF_CDAnalyser
             MainBody = new MainBody(_filesPaths);
             MainBody.mainAnalysis();
 
+            var Results = MainBody.ResultsList;
+            foreach (var result in Results)
+            {
+                rTextBoxOutput.AppendText("============================================\n");
+                foreach (var elem in result.Header)
+                {
+                    rTextBoxOutput.AppendText($"{elem.Key.ToString()} - {elem.Value.ToString()} \n");
+                }
+                foreach (var elem in result.SourceInfo)
+                {
+                    rTextBoxOutput.AppendText($"{elem.Key.ToString()} - {elem.Value.ToString()} \n");
+                }
+
+
+
+            }
+
             //
         }
 
@@ -64,7 +82,7 @@ namespace WPF_CDAnalyser
 
         private void RichTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
-            
+
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)

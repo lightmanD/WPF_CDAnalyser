@@ -7,22 +7,19 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="400" Width="600" MaxHeight="400" MaxWidth="762" ResizeMode="NoResize">
 
-    <Grid Background="#FF898888">
+    <Grid Background="#FF898888" Margin="0,0,0,-147">
         <Grid.ColumnDefinitions>
 
             <ColumnDefinition Width="400*"/>
         </Grid.ColumnDefinitions>
-        <RichTextBox Name="rTextBoxOutput" HorizontalAlignment="Left" Height="261.988" Margin="163.622,9.005,0,0" VerticalAlignment="Top" Width="419.292" VerticalScrollBarVisibility="Visible" TextChanged="RichTextBox_TextChanged">
+        <RichTextBox Name="rTextBoxOutput" HorizontalAlignment="Left" Height="496.988" Margin="163.622,9.005,0,0" VerticalAlignment="Top" Width="419.292" VerticalScrollBarVisibility="Visible" TextChanged="RichTextBox_TextChanged">
             <FlowDocument>
                 <Paragraph/>
             </FlowDocument>
         </RichTextBox>
         <Button Content="Files" HorizontalAlignment="Left" Height="20" Margin="10,9.842,0,0" VerticalAlignment="Top" Width="50" Click="Button_Click"/>
-        <RichTextBox Name="rTextBoxInput" HorizontalAlignment="Left" Height="73" Margin="163.5,282,0,0" VerticalAlignment="Top" Width="419.333">
-            <FlowDocument/>
-        </RichTextBox>
         <Button Content="Config" HorizontalAlignment="Left" Margin="10,38,0,0" VerticalAlignment="Top" Width="51" Height="20" Click="Button_Click_2"/>
-        <Button Content="Exit" Margin="12,339,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" Click="Button_Click_1"/>
+        <Button Content="Exit" Margin="9,493,0,0" Height="20" VerticalAlignment="Top" HorizontalAlignment="Left" Width="50" Click="Button_Click_1"/>
 
     </Grid>
 </Window>
