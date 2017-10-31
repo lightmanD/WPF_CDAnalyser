@@ -39,14 +39,14 @@ namespace WPF_CDAnalyser
                 var meansList = msrFile.MeansArray;
                 var sourseInfoDic = msrFile.SourseDataDic;
                 var mpAllList = msrFile.MpNamesList;
-
+                
                 var ConfigWorker = new ConfigWorker(headerDic["recipe_name"], mpAllList);
 
                 var groupNumber = ConfigWorker._groupNumber;
                 var gropsNames = ConfigWorker._listGroups;
                 var sigmaSpacing = ConfigWorker._sigmaSpacing;
                 var ctrlValues = ConfigWorker._ctrlValues;
-
+                
                 var analyser = new Analyser(meansList, sourseInfoDic, groupNumber);
 
                 var meansByGroups = analyser.MeansByWafer;

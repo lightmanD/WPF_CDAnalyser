@@ -58,6 +58,8 @@ namespace WPF_CDAnalyser
             MainBody = new MainBody(_filesPaths);
             MainBody.mainAnalysis();
 
+            //визаулизаця результатов в текстбокс
+
             var Results = MainBody.ResultsList;
             foreach (var result in Results)
             {
@@ -71,7 +73,19 @@ namespace WPF_CDAnalyser
                     rTextBoxOutput.AppendText($"{elem.Key.ToString()} - {elem.Value.ToString()} \n");
                 }
 
+                foreach (var elem in result.GroupNames)
+                    rTextBoxOutput.AppendText(elem + " || ");
+                rTextBoxOutput.AppendText("\n");
 
+
+                for (int i = 0; i < result.ResultData[0].Count; i++)
+                {
+                    for (int j=0; j<result.ResultData.Count; j++)
+                    {
+                        rTextBoxOutput.AppendText(Math.Round(result.ResultData[j][i],3).ToString() + " || ");
+                    }
+                    rTextBoxOutput.AppendText("\n");
+                }
 
             }
 

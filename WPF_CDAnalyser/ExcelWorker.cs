@@ -34,6 +34,7 @@ namespace WPF_CDAnalyser
 
         private void FileExcelCreator()
         {
+            var x = DateTime.Today;
             string recipeName = Wafers[0].Header["recipe_name"];
             string lotID = Wafers[0].Header["lot_id"];
 

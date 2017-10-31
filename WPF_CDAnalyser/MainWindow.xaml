@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPF_CDAnalyser"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600" MaxHeight="400" MaxWidth="762" ResizeMode="NoResize">
+        Title="MainWindow" Height="547" Width="600" MaxHeight="550" MaxWidth="762" ResizeMode="NoResize">
 
     <Grid Background="#FF898888" Margin="0,0,0,-147">
         <Grid.ColumnDefinitions>
 
             <ColumnDefinition Width="400*"/>
         </Grid.ColumnDefinitions>
-        <RichTextBox Name="rTextBoxOutput" HorizontalAlignment="Left" Height="496.988" Margin="163.622,9.005,0,0" VerticalAlignment="Top" Width="419.292" VerticalScrollBarVisibility="Visible" TextChanged="RichTextBox_TextChanged">
+        <RichTextBox Name="rTextBoxOutput" HorizontalAlignment="Left" Height="496.988" Margin="163.622,9.005,0,0" VerticalAlignment="Top" Width="419.292" VerticalScrollBarVisibility="Visible" TextChanged="RichTextBox_TextChanged" IsUndoEnabled="False">
             <FlowDocument>
                 <Paragraph/>
             </FlowDocument>
