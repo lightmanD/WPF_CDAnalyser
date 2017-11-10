@@ -40,7 +40,7 @@ namespace WPF_CDAnalyser
 
             _path = Directory.GetCurrentDirectory() + @"\results\";
 
-            _path += "_"+DateTime.Today.Millisecond.ToString()+"_" + lotID;
+            _path += DateTime.Today.Millisecond.ToString() + "_" + lotID;
             _path += "_" + recipeName + ".xlsx";
             _path = _path.Replace('\"', '_');
             Console.WriteLine(_path);
@@ -54,14 +54,14 @@ namespace WPF_CDAnalyser
                 foreach (var wafer in Wafers)
                 {
                     ExcelWorksheet worksheet = package.Workbook.Worksheets.Add("W " +
-                        wafer.SourceInfo["slot_no"].ToString()+"|"+ DateTime.Now.Millisecond.ToString());
+                        wafer.SourceInfo["slot_no"].ToString() + "|" + DateTime.Now.Millisecond.ToString());
 
                     FormWriter(worksheet);
                     HeaderWriter(worksheet, wafer);
                     WaferWriter(worksheet, wafer);
                 }
 
-                ExcelWorksheet worksheetForLot = package.Workbook.Worksheets.Add("ByLot");
+                ExcelWorksheet worksheetForLot = package.Workbook.Worksheets.Add("ByLot |" + DateTime.Now.ToString());
                 FormWriter(worksheetForLot);
                 // HeaderWriter(worksheetForLot, Wafers[0]);
                 LotWriter(worksheetForLot, Wafers[0]);
@@ -166,14 +166,14 @@ namespace WPF_CDAnalyser
                     counter++;
                     rowCounter++;
                 }
-               
+
                 rowCounter++;
                 foreach (var val in LotResult.MeansByGroup[i])
                     workSheet.Cells[rowCounter++, i + 4].Value = val;
             }
         }
 
-       
+
 
         private void HeaderWriter(ExcelWorksheet workSheet, ResultObject wafer)
         {

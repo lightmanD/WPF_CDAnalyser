@@ -80,34 +80,41 @@ namespace WPF_CDAnalyser
 
                 for (int i = 0; i < result.ResultData[0].Count; i++)
                 {
-                    for (int j=0; j<result.ResultData.Count; j++)
+                    for (int j = 0; j < result.ResultData.Count; j++)
                     {
-                        rTextBoxOutput.AppendText(Math.Round(result.ResultData[j][i],3).ToString() + " || ");
+                        try
+                        {
+                            rTextBoxOutput.AppendText(Math.Round(result.ResultData[j][i], 3).ToString() + " || ");
+                        }
+                        catch (Exception exc)
+                        {
+                            Console.WriteLine("MainWindowXAML_ButtonClick " + exc.Message);
+                        }
+                        rTextBoxOutput.AppendText("\n");
                     }
-                    rTextBoxOutput.AppendText("\n");
+
                 }
+
+                //
+            }
+        }
+
+
+
+            private void RichTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+            {
 
             }
 
-            //
-        }
+            private void Button_Click_1(object sender, RoutedEventArgs e)
+            {//exit button
+                this.Close();
+            }
 
+            private void Button_Click_2(object sender, RoutedEventArgs e)
+            {//config open button
 
-
-        private void RichTextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {//exit button
-            this.Close();
-        }
-
-        private void Button_Click_2(object sender, RoutedEventArgs e)
-        {//config open button
-
-            Process.Start(Directory.GetCurrentDirectory());
+                Process.Start(Directory.GetCurrentDirectory());
+            }
         }
     }
-}
